@@ -1,4 +1,4 @@
-export const Appbar = () => {
+const Appbar = () => {
     return <div className="flex justify-between pr-4 pt-2 pl-4 h-16 bg-gray-400">
         <div className="h-9 p-1">
             <h3 className="font-display text-3xl">
@@ -12,3 +12,5 @@ export const Appbar = () => {
         </div>
     </div>
 }
+
+export default Appbar;
