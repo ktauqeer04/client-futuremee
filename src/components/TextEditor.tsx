@@ -1,9 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef, useEffect } from "react"
+import { motion } from "framer-motion"
 
-
-
-export default function TextInput() {
+export default function ContentInput() {
   const [text, setText] = useState("")
   const [preview, setPreview] = useState(false)
   const taRef = useRef<HTMLTextAreaElement | null>(null)

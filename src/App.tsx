@@ -1,6 +1,6 @@
 import './App.css'
-import { Appbar } from './components/Appbar'
-import TextInput from './components/ContentInputs'
+import Appbar from './components/Appbar'
+import ContentInput from './components/TextEditor'
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
       </div>
 
       <div>
-        <TextInput />
+        <ContentInput />
       </div>
             
     </div>
