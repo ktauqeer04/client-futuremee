@@ -11,8 +11,18 @@ function App() {
         <Appbar />
       </div>
 
-      <div>
-        <ContentInput />
+      <div className='bg-red-400'>
+          animation
+      </div>
+
+      <div className='flex w-full'>
+        <div className='w-1/2'>
+            <ContentInput />
+        </div>
+        <div className='w-1/2'>
+          emails and shit
+        </div>
+
       </div>
             
     </div>
