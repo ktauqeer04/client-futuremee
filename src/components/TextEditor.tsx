@@ -18,7 +18,7 @@ export default function ContentInput() {
 
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 flex items-start justify-center">
+    <div className="p-6 bg-gray-50 flex items-start justify-center">
       <div className="w-full max-w-4xl">
         <div className="mb-4 flex items-center justify-between">
           <div>

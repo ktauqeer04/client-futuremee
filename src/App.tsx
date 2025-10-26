@@ -1,5 +1,6 @@
 import './App.css'
 import Appbar from './components/Appbar'
+import Inputs from './components/Inputs'
 import ContentInput from './components/TextEditor'
 
 function App() {
@@ -16,13 +17,19 @@ function App() {
       </div>
 
       <div className='flex w-full'>
+
         <div className='w-1/2'>
             <ContentInput />
         </div>
+
         <div className='w-1/2'>
-          emails and shit
+          <Inputs />
         </div>
 
+      </div>
+
+      <div className='bg-gray-500'>
+        new div
       </div>
             
     </div>
