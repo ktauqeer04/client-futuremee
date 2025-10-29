@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import type { InputProps } from "../interfaces";
+import { DEV_URL } from "../config";
 
-export default function Inputs(){
 
-    const [emailInput, setEmailInput] = useState("");
-    const [confirmEmailInput, setConfirmEmailInput] = useState("");
-    const [scheduleDate, setScheduleDate] = useState("");
+
+export default function Inputs({ emailInput, setEmailInput, confirmEmailInput, setConfirmEmailInput, scheduledDate, setScheduledDate}: InputProps){
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -21,31 +21,47 @@ export default function Inputs(){
 
     useEffect(() => {
 
-        if(!scheduleDate){
+        if(!scheduledDate){
             return;
         }
 
-        const ISODate = new Date(scheduleDate).toISOString();
+        const ISODate = new Date(scheduledDate).toISOString();
         console.log("ISO Date:", ISODate);
         console.log("Email Input:", emailInput);
 
-    }, [scheduleDate, emailInput])
+    }, [scheduledDate, emailInput]);
+
+
 
     const apiSubmit = async () => {
 
         const payload = {
             email: emailInput,
-            content: "Sample content",
-            sendDate: new Date(scheduleDate).toISOString()
+            content: `
+                hello future mee......
+
+                
+
+                this is alignment 3
+
+
+                this is alignment 2
+
+                this is alignment 1
+
+                                ...... by tauqeer
+            `,
+            sendDate: new Date(scheduledDate).toISOString()
         }
 
         try{
 
-            const response = await axios.post('http://localhost:3000/vi-module', payload);
+            const response = await axios.post(`${DEV_URL}/vi-module`, payload);
             console.log("Response from API:", response.data);
 
         }catch(err: any){
-            console.error("Error submitting data:", err);   
+            console.log("Error submitting data:", err);   
+            throw err;
         }
 
     }
@@ -70,8 +86,8 @@ export default function Inputs(){
             <input
                 type="date"
                 min={minDate}
-                value={scheduleDate}
-                onChange={e => setScheduleDate(e.target.value)}
+                value={scheduledDate}
+                onChange={e => setScheduledDate(e.target.value)}
                 aria-label="Pick a scheduled date (from tomorrow onwards)"
             />
         </div>

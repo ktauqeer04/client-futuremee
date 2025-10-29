@@ -1,7 +1,6 @@
 import './App.css'
 import Appbar from './components/Appbar'
-import Inputs from './components/Inputs'
-import ContentInput from './components/TextEditor'
+import ParentInput from './components/ParentInput'
 
 function App() {
 
@@ -16,17 +15,7 @@ function App() {
           animation
       </div>
 
-      <div className='flex w-full'>
-
-        <div className='w-1/2'>
-            <ContentInput />
-        </div>
-
-        <div className='w-1/2'>
-          <Inputs />
-        </div>
-
-      </div>
+      <ParentInput />
 
       <div className='bg-gray-500'>
         new div

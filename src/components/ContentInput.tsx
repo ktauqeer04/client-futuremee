@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
+import type { ContentInputProps } from "../interfaces";
 
-export default function ContentInput() {
-  const [text, setText] = useState("");
+export default function ContentInput({ contentInput, setContentInput }: ContentInputProps) {
+
   const taRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -10,10 +11,10 @@ export default function ContentInput() {
     ta.style.height = "0px"
     const height = ta.scrollHeight
     ta.style.height = height + "px"
-  }, [text])
+  }, [contentInput])
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value)
+    setContentInput(e.target.value)
   }
 
 
@@ -29,7 +30,7 @@ export default function ContentInput() {
         <div className="bg-gray-400 rounded-2xl p-3 shadow-sm ">
             <textarea
                 ref={taRef}
-                value={text}
+                value={contentInput}
                 onChange={handleChange}
                 placeholder="Hi..."
                 className="w-full resize-none min-h-[28rem] max-h-[70vh] overflow-auto outline-none text-sm leading-relaxed p-4 rounded-lg border border-gray-100 focus:ring-2 focus:ring-indigo-200"
