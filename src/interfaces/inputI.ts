@@ -9,6 +9,9 @@ export interface InputProps {
     scheduledDate: string;
     setScheduledDate: (date: string) => void;
 
+    contentInput: string;
+    setContentInput: (contentInput : string) => void;
+
 }
 
 export interface ContentInputProps {
@@ -16,4 +19,11 @@ export interface ContentInputProps {
     contentInput: string;
     setContentInput: (contentInput : string) => void;
 
+}
+
+export interface FormData {
+  email: string;
+  confirmEmail: string;
+  scheduledDate: string;
+  content: string;
 }

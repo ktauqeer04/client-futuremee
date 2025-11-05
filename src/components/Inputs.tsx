@@ -1,103 +1,83 @@
-import axios from "axios";
-import { useEffect } from "react"
-import type { InputProps } from "../interfaces";
-import { DEV_URL } from "../config";
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "../interfaces/inputI";
 
+export default function Inputs() {
+  const { register, watch, formState: { errors } } = useFormContext<FormData>();
+  
+  const emailValue = watch("email");
 
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
-export default function Inputs({ emailInput, setEmailInput, confirmEmailInput, setConfirmEmailInput, scheduledDate, setScheduledDate}: InputProps){
+  const toLocalYYYYMMDD = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
 
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = toLocalYYYYMMDD(tomorrow);
 
-    const toLocalYYYYMMDD = (d: Date) => {
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        return `${y}-${m}-${day}`;
-    };
+  return (
+    <div className="space-y-4 p-6">
+      <div>
+        <input 
+          {...register("email", {
+            required: "Hey you cannot leave this empty",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Not an Email b*tch"
+            }
+          })}
+          type="email" 
+          placeholder="email"
+          className="w-full p-2 border rounded"
+        />
+        {errors.email && (
+          <span className="text-red-500 text-sm">{errors.email.message}</span>
+        )}
+      </div>
 
-    const minDate = toLocalYYYYMMDD(tomorrow);
+      <div>
+        <input
+          {...register("confirmEmail", {
+            required: "Fill this up too",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "It should be a damn email!!!!"
+            },
+            validate: value => value === emailValue || "I am pretty sure the emails don't match"
+          })} 
+          type="email" 
+          placeholder="confirm email"
+          className="w-full p-2 border rounded"
+        />
+        {errors.confirmEmail && (
+          <span className="text-red-500 text-sm">{errors.confirmEmail.message}</span>
+        )}
+      </div>
 
-    useEffect(() => {
+      <div>
+        <input
+          {...register("scheduledDate", {
+            required: "So you're sending a letter to yourself in the future without picking a date? Think again!"
+          })}
+          type="date"
+          min={minDate}
+          aria-label="Pick a scheduled date (from tomorrow onwards)"
+          className="w-full p-2 border rounded"
+        />
+        {errors.scheduledDate && (
+          <span className="text-red-500 text-sm">{errors.scheduledDate.message}</span>
+        )}
+      </div>
 
-        if(!scheduledDate){
-            return;
-        }
-
-        const ISODate = new Date(scheduledDate).toISOString();
-        console.log("ISO Date:", ISODate);
-        console.log("Email Input:", emailInput);
-
-    }, [scheduledDate, emailInput]);
-
-
-
-    const apiSubmit = async () => {
-
-        const payload = {
-            email: emailInput,
-            content: `
-                hello future mee......
-
-                
-
-                this is alignment 3
-
-
-                this is alignment 2
-
-                this is alignment 1
-
-                                ...... by tauqeer
-            `,
-            sendDate: new Date(scheduledDate).toISOString()
-        }
-
-        try{
-
-            const response = await axios.post(`${DEV_URL}/vi-module`, payload);
-            console.log("Response from API:", response.data);
-
-        }catch(err: any){
-            console.log("Error submitting data:", err);   
-            throw err;
-        }
-
-    }
-
-
-
-    return <div>
-        <div>
-            <input 
-                type="email" 
-                placeholder="email" 
-                value ={emailInput} 
-                onChange={e => setEmailInput(e.target.value)}
-            />
-        </div>
-
-        <div>
-            <input type="email" placeholder="confirm email"/>
-        </div>
-
-        <div>
-            <input
-                type="date"
-                min={minDate}
-                value={scheduledDate}
-                onChange={e => setScheduledDate(e.target.value)}
-                aria-label="Pick a scheduled date (from tomorrow onwards)"
-            />
-        </div>
-
-        <div>
-            <button type="submit" onClick={apiSubmit}>
-                Submit
-            </button>
-        </div>
-    
+      <button 
+        type="submit"
+        className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700"
+      >
+        Submit
+      </button>
     </div>
-
+  );
 }
